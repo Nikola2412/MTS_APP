@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:title="Angažuj me"
+            android:id="@+id/angazuj_me"
+            android:icon="@drawable/ic_engage"
+            />
+
+        <item
+            android:title="Pretraga ljudi"
+            android:id="@+id/pretraga_ljudi"
+            android:icon="@drawable/ic_baseline_person_search_24"/>
+
+        <item
+            android:title="Moj profil"
+            android:id="@+id/moj_profil"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            />
+
+</menu>
