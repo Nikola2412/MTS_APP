@@ -10,7 +10,8 @@
         <item
             android:title="Pretraga ljudi"
             android:id="@+id/pretraga_ljudi"
-            android:icon="@drawable/ic_baseline_person_search_24"/>
+            android:icon="@drawable/ic_baseline_person_search_24"
+            />
 
         <item
             android:title="Moj profil"
