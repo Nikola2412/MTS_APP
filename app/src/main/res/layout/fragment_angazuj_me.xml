@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".AngazujMe">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="342dp"
         android:text="Ovde bi bila lista ponuda aktivnosti za korisnika - pojedinca.\n Npr. trazim 7 glumaca/ planinarsko drustvo organizuje putovanje" />
 
 </FrameLayout>

@@ -5,6 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/framelayout"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
@@ -13,6 +17,7 @@
         android:id="@+id/bottom_nav"
         app:menu="@menu/bottom_nav"
         android:elevation="@dimen/cardview_compat_inset_shadow"
+        android:background="?attr/colorOnPrimary"
         >
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
