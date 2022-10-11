@@ -76,5 +76,6 @@ class SwipeLisener implements View.OnTouchListener  {
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         return gs.onTouchEvent(motionEvent);
+
     }
 }
