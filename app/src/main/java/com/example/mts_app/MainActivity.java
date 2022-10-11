@@ -18,17 +18,19 @@ import android.widget.TextView;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     RelativeLayout relativeLayout;
-    //privremeno
-    //TextView tx;
+
     SwipeLisener sl;
     BottomNavigationView menu;
-    MenuItem btn_mojprofil, btn_angazujme, btn_pretragaljudi;
-    Fragment angazujMe,pretragaLjudi,mojProfil;
-    int frag=2; //id trenutnog fragmenta
-    // id od 1 do 3
+    public MenuItem btn_mojprofil, btn_angazujme, btn_pretragaljudi;
+
+    Fragment[] frags;
+    public int frag=2; //id trenutnog fragmenta, izmedju 1 i 3
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,28 +38,30 @@ public class MainActivity extends AppCompatActivity {
 
         menu = (BottomNavigationView) findViewById(R.id.bottom_nav);
         relativeLayout = findViewById(R.id.main);
-        //tx = findViewById(R.id.test);
-        sl = new SwipeLisener(relativeLayout);
-        //Menu dugmad
 
+        sl = new SwipeLisener(relativeLayout, this);
+
+        //Menu dugmad
         btn_angazujme = menu.getMenu().getItem(1);
         btn_pretragaljudi = menu.getMenu().getItem(0);
         btn_mojprofil = menu.getMenu().getItem(2);
 
-        angazujMe = new AngazujMe();
-        pretragaLjudi = new PretragaLjudi();
-        mojProfil = new MojProfil();
+        frags = new Fragment[3];
+        frags[0] = new PretragaLjudi();
+        frags[1] = new AngazujMe();
+        frags[2] = new MojProfil();
         btn_angazujme.setChecked(true);
-        replaceFragment(angazujMe,false,false);
-        //ONClick otvara frament
+        replaceFragment(frags[1],false,false);
+
+        //OnClick za dugmad u bottom baru - otvaraju fragmente
         btn_angazujme.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if(frag == 1)
-                    replaceFragment(angazujMe,false,true);
+                if(frag == 0)
+                    replaceFragment(frags[0],false,true);
                 else
-                    replaceFragment(angazujMe,true,false);
-                frag = 2;
+                    replaceFragment(frags[0],true,false);
+                frag = 1;
                 return false;
             }
         });
@@ -65,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         btn_pretragaljudi.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                replaceFragment(pretragaLjudi,true,false);
-                frag = 1;
+                replaceFragment(frags[0],true,false);
+                frag = 0;
                 return false;
             }
         });
@@ -74,13 +78,12 @@ public class MainActivity extends AppCompatActivity {
         btn_mojprofil.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                replaceFragment(mojProfil, true, true);
-                frag = 3;
+                replaceFragment(frags[2], true, true);
+                frag = 2;
                 return false;
             }
         });
     }
-
 
     void replaceFragment(Fragment fr, boolean toleft, boolean toright) {
         FragmentManager fmanager = getSupportFragmentManager();
@@ -93,73 +96,5 @@ public class MainActivity extends AppCompatActivity {
         ftransaction.replace(R.id.framelayout, fr);
 
         ftransaction.commit();
-    }
-    //iskreno nmp sta je ovo ali detektuje swipe heheh
-    private class SwipeLisener implements View.OnTouchListener  {
-        GestureDetector gs;
-
-
-        SwipeLisener(View view) {
-
-
-            GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onDown(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                    float xdiff = e1.getX() - e2.getX();
-
-                    try {
-                        if(xdiff>0) {
-                            //desno
-                            //tx.setText("desno");
-                            if (frag == 2) {
-
-                                btn_mojprofil.setChecked(true);
-                                replaceFragment(mojProfil, true, true);
-                                frag = 3;
-                            }
-                            else if(frag==1)
-                            {
-                                btn_angazujme.setChecked(true);
-                                replaceFragment(angazujMe,false,true);
-                                frag = 2;
-                            }
-                        }
-                        else if(xdiff<0) {
-                            //levo
-                            if(frag==2)
-                            {
-                                btn_pretragaljudi.setChecked(true);
-                                replaceFragment(pretragaLjudi,true,false);
-                                frag=1;
-                            }
-                            else if(frag ==3)
-                            {
-                                btn_angazujme.setChecked(true);
-                                replaceFragment(angazujMe,true,false);
-                                frag=2;
-                            }
-                        }
-                        return true;
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    return false;
-                }
-            };
-            gs = new GestureDetector(listener);
-            view.setOnTouchListener(this);
-        }
-
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            return gs.onTouchEvent(motionEvent);
-        }
     }
 }
