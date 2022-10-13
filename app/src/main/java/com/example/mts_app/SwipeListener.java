@@ -21,11 +21,6 @@ class SwipeLisener implements View.OnTouchListener  {
 
         GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener() {
             @Override
-            public boolean onDown(MotionEvent e) {
-                return true;
-            }
-
-            @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 float xdiff = e1.getX() - e2.getX();
                 float ydiff = e1.getY() - e2.getY();
