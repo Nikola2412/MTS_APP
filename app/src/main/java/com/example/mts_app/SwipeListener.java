@@ -35,7 +35,7 @@ class SwipeLisener implements View.OnTouchListener  {
 
                 try {
                     if(Math.abs(xdiff)<Math.abs(ydiff) || Math.abs(xdiff)< mainActivity.dm.xdpi)//uslovi kad nece
-                        return false;
+                        return true;
                     if(xdiff > 0)
                     { //swipe treba da bude barem inch po x
                         //desno
