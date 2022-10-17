@@ -16,50 +16,45 @@ import androidx.fragment.app.FragmentTransaction;
 class SwipeLisener implements View.OnTouchListener  {
 
     GestureDetector gs;
+
+
     public SwipeLisener(View view, MainActivity mainActivity) {
+
 
 
         GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener() {
             @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 float xdiff = e1.getX() - e2.getX();
                 float ydiff = e1.getY() - e2.getY();
-                DisplayMetrics dm = new DisplayMetrics();
-                mainActivity.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
                 try {
-                        if(Math.abs(ydiff) < 1.5*dm.ydpi){ // da ne bude previse (1.5in <) u visinu
-                            if(xdiff > dm.xdpi) { //swipe treba da bude barem inch po x
-                                //desno
-                                if (mainActivity.frag == 2) {
-
-                                    mainActivity.btn_mojprofil.setChecked(true);
-                                    mainActivity.replaceFragment(mainActivity.frags[2], true, true);
-                                    mainActivity.frag = 3;
-                                }
-                                else if(mainActivity.frag==1)
-                                {
-                                    mainActivity.btn_angazujme.setChecked(true);
-                                    mainActivity.replaceFragment(mainActivity.frags[1],false,true);
-                                    mainActivity.frag = 2;
-                                }
-                            }
-                            else if(xdiff < -dm.xdpi && Math.abs(ydiff) < 1.5*dm.ydpi) { //swipe treba da bude barem inch po x
-                                //levo
-                                if(mainActivity.frag==2)
-                                {
-                                    mainActivity.btn_pretragaljudi.setChecked(true);
-                                    mainActivity.replaceFragment(mainActivity.frags[0],true,false);
-                                    mainActivity.frag=1;
-                                }
-                                else if(mainActivity.frag ==3)
-                                {
-                                    mainActivity.btn_angazujme.setChecked(true);
-                                    mainActivity.replaceFragment(mainActivity.frags[1],true,false);
-                                    mainActivity.frag=2;
-                                }
-                            }
+                    if(Math.abs(xdiff)<Math.abs(ydiff) || Math.abs(xdiff)< mainActivity.dm.xdpi)//uslovi kad nece
+                        return false;
+                    if(xdiff > 0)
+                    { //swipe treba da bude barem inch po x
+                        //desno
+                        if(mainActivity.frag < mainActivity.buttons.length)
+                        {
+                            mainActivity.frag++;
+                            mainActivity.buttons[mainActivity.frag].setChecked(true);
+                            mainActivity.replaceFragment(mainActivity.frags[mainActivity.frag],false,true);
                         }
+                    }
+                    else if(xdiff < 0) { //swipe treba da bude barem inch po x
+                        //levo
+                        if(mainActivity.frag>0)
+                        {
+                            mainActivity.frag--;
+                            mainActivity.buttons[mainActivity.frag].setChecked(true);
+                            mainActivity.replaceFragment(mainActivity.frags[mainActivity.frag],true,false);
+                        }
+                    }
                     return true;
                 }
                 catch (Exception e){
