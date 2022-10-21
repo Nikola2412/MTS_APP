@@ -7,10 +7,10 @@
     tools:context=".MojProfil">
 
     <TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Profil korisnika, koji on podesava - stavlja cime se bavi, sta ga interesuje, profilnu sliku itd.."
-    />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Profil korisnika, koji on podesava - stavlja cime se bavi, sta ga interesuje, profilnu sliku itd.."
+        android:textColor="#00838F" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/apply"
