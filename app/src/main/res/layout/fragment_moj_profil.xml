@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Profil korisnika, koji on podesava - stavlja cime se bavi, sta ga interesuje, profilnu sliku itd..-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="60dp"
     tools:context=".MojProfil">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profil korisnika, koji on podesava - stavlja cime se bavi, sta ga interesuje, profilnu sliku itd.."
-        android:textColor="#00838F" />
+        android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/baner"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <ImageView
+            android:id="@+id/pfp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="-30dp"
+            android:layout_marginEnd="160dp"
+            android:foregroundGravity="center_horizontal"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/baner"
+            tools:src="@tools:sample/avatars"
+            >
+        </ImageView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/apply"
         android:layout_width="75dp"
@@ -23,5 +51,6 @@
         tools:ignore="SpeakableTextPresentCheck">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
 
 </FrameLayout>
