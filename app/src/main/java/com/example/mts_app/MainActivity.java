@@ -13,6 +13,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,8 +27,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     RelativeLayout relativeLayout;
-
-    SwipeLisener sl;
+    HorizontalScrollView scrollView;
+    LinearLayout containter;
     BottomNavigationView menu;
     //public MenuItem btn_mojprofil, btn_angazujme, btn_pretragaljudi;
 
@@ -44,10 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         menu = (BottomNavigationView) findViewById(R.id.bottom_nav);
         relativeLayout = findViewById(R.id.main);
-
-        sl = new SwipeLisener(relativeLayout, this);
-
-
+        scrollView = (HorizontalScrollView) findViewById(R.id.scrollView);
+        containter = (LinearLayout) findViewById(R.id.container);
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
 
@@ -64,19 +65,25 @@ public class MainActivity extends AppCompatActivity {
         frags[0] = new AngazujMe();
         frags[1] = new PretragaLjudi();
         frags[2] = new MojProfil();
-        //btn_angazujme.setChecked(true);
+
         buttons[frag].setChecked(true);
-        replaceFragment(frags[frag],false,false);
+        FrameLayout []frameLayout = new FrameLayout[3];
+        for(int i = 0;i<3; i++) {
+            frameLayout[i] = new FrameLayout(getBaseContext());
+        }
+        frameLayout[0].setId(R.id.framel1);
+        frameLayout[1].setId(R.id.framel2);
+        frameLayout[2].setId(R.id.framel3);
+        for (int i = 0; i<3;i++) {
+            replaceFragment(frags[i], frameLayout[i]);
+            containter.addView(frameLayout[i]);
+        }
+
 
         //OnClick za dugmad u bottom baru - otvaraju fragmente
         buttons[1].setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if(frag == 0)
-                    replaceFragment(frags[1],false,true);
-                else
-                    replaceFragment(frags[1],true,false);
-                frag = 1;
                 return false;
             }
         });
@@ -84,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
         buttons[0].setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                replaceFragment(frags[0],true,false);
-                frag = 0;
                 return false;
             }
         });
@@ -93,22 +98,17 @@ public class MainActivity extends AppCompatActivity {
         buttons[2].setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                replaceFragment(frags[2], true, true);
-                frag = 2;
                 return false;
             }
         });
+
     }
 
-    void replaceFragment(Fragment fr, boolean toleft, boolean toright) {
+    void replaceFragment(Fragment fr, FrameLayout fl) {
         FragmentManager fmanager = getSupportFragmentManager();
         FragmentTransaction ftransaction = fmanager.beginTransaction();
-        if (toleft)
-            ftransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        if (toright)
-            ftransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         //ako nije ni toleft, ni toright, nece biti animacije
-        ftransaction.replace(R.id.framelayout, fr);
+        ftransaction.replace(fl.getId(), fr);
 
         ftransaction.commit();
     }
