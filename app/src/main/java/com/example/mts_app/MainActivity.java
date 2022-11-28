@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Console;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public HorizontalScrollView scrollView;
     LinearLayout containter;
     BottomNavigationView menu;
+    FloatingActionButton applybtn_myprofile;
     int curr_page = 0;
 
     Page[] pages;
@@ -75,13 +77,11 @@ public class MainActivity extends AppCompatActivity {
                 //Visina: visina ekrana - visina bottom menija - margina 20dp
                 //Margina 20dp je podesena u XML pa zato da bude jednaka i sa donje strane; 20dp = 20/(160/dm.xdpi)
                 for(int i = 0;i<3; i++) {
-                    pages[i].FrameLO.setLayoutParams(new LinearLayout.LayoutParams(dm.widthPixels,dm.heightPixels - menu.getHeight() - (int)(20/(160/dm.xdpi))));
+                    pages[i].FrameLO.setLayoutParams(new LinearLayout.LayoutParams(dm.widthPixels,containter.getHeight()));
                     pages[i].FrameLO.setNestedScrollingEnabled(false);
                 }
             }
         });
-
-        //scrollView.setOnTouchListener(new OnSwipeTouchListener(getBaseContext()));
 
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
