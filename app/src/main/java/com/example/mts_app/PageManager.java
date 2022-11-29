@@ -19,6 +19,10 @@ public class PageManager {
         horizontalScrollView.smoothScrollTo(n * dm.widthPixels, 0);
     }
 
+    static void ScrollToPage_NoAnim(int n, HorizontalScrollView horizontalScrollView, DisplayMetrics dm) {
+        horizontalScrollView.scrollTo(n * dm.widthPixels, 0);
+    }
+
     static int ScrollToWholePage(HorizontalScrollView horizontalScrollView, DisplayMetrics dm, int n_staro) {
         int n = (int)Math.round((double)horizontalScrollView.getScrollX() / (double)dm.widthPixels);
 

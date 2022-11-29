@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout containter;
     BottomNavigationView menu;
     FloatingActionButton applybtn_myprofile;
-    int curr_page = 0;
 
     Page[] pages;
 
+    boolean Postoji_Scroll = false;
+
     public DisplayMetrics dm = new DisplayMetrics();
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,25 +86,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Početno prikazana stranica:
+        PageManager.ScrollToPage_NoAnim(1,scrollView, dm);
+        markButton(1);
+        //--------------------------
 
+        //Svaki put po podignutom kliku se podesava polozaj scroll-a, ako se dogodio scroll (Postoji_Scroll ?)
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && Postoji_Scroll) {
+                    int curr_page = 0;
                     curr_page = PageManager.ScrollToWholePage(scrollView,dm, curr_page);
                     markButton(curr_page);
+                    Postoji_Scroll = false;
                 }
 
                 return false;
             }
         });
+        //----------------------------
 
+        //Ako je doslo do scroll-a po X postavlja se flag, da se ne bi postavljao polozaj scroll-a svaki put na TouchUp
+        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int x, int y, int xOld, int yOld) {
+                if(Math.abs(x-xOld) > 0)
+                    Postoji_Scroll = true;
+            }
+        });
+        //----------------------------
     }
 
     void markButton(int n)
     {
         pages[n].OpenButton.setChecked(true);
-
     }
 }
 
