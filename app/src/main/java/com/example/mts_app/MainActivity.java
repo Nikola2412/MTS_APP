@@ -83,13 +83,13 @@ public class MainActivity extends AppCompatActivity {
                     pages[i].FrameLO.setLayoutParams(new LinearLayout.LayoutParams(dm.widthPixels,containter.getHeight()));
                     pages[i].FrameLO.setNestedScrollingEnabled(false);
                 }
+
+                //Početno prikazana stranica:
+                PageManager.ScrollToPage_NoAnim(1,scrollView, dm);
+                markButton(1);
+                //--------------------------
             }
         });
-
-        //Početno prikazana stranica:
-        PageManager.ScrollToPage_NoAnim(1,scrollView, dm);
-        markButton(1);
-        //--------------------------
 
         //Svaki put po podignutom kliku se podesava polozaj scroll-a, ako se dogodio scroll (Postoji_Scroll ?)
         scrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -111,8 +111,7 @@ public class MainActivity extends AppCompatActivity {
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int x, int y, int xOld, int yOld) {
-                if(Math.abs(x-xOld) > 0)
-                    Postoji_Scroll = true;
+                Postoji_Scroll = (Math.abs(x-xOld) > 0);
             }
         });
         //----------------------------
